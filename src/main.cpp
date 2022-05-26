@@ -1,4 +1,8 @@
 #include <SFML/Graphics.hpp>
+#include <SFML/Graphics/Font.hpp>
+#include <iostream>
+#include <string>
+#include <vector>
 
 #include "basic.hpp"
 #include "game.hpp"
@@ -6,24 +10,43 @@
 using namespace std;
 
 int main() {
-    sf::RenderWindow window(sf::VideoMode(640, 960), "The Game!");
+    sf::RenderWindow window(sf::VideoMode(600, 900), "Tetris");
 
     sf::Texture t1, t2, t3;
     t1.loadFromFile("images/tiles.png");
     t2.loadFromFile("images/background.png");
     t3.loadFromFile("images/frame.png");
     sf::Sprite background(t2), frame(t3);
-    background.setScale(sf::Vector2f(2, 2));
-    frame.setScale(sf::Vector2f(2, 2));
+
+    sf::Vector2f scale(2, 2);
+    background.setScale(scale);
+    frame.setScale(scale);
 
     int height = 20;
     int width = 10;
     Game::Tetris t(height, width, t1);
-    t.setScale(sf::Vector2f(2, 2));
+    t.setScale(scale);
+
+    int score = 0;
+
+    /*
+    string font_path = R"(C:\Windows\Fonts\Microsoft YaHei UI)";
+    sf::Font font;
+    if (!font.loadFromFile(font_path)) {
+        // error...
+    }
+
+    sf::Text text;
+    text.setFont(font);
+    text.setString("Hello");
+    text.setCharacterSize(24);
+    text.setFillColor(sf::Color::Red);
+    text.setStyle(sf::Text::Bold | sf::Text::Underlined);
+    text.move(416, 0);
+    */
 
     int dx = 0;
     bool rotate = false;
-
     sf::Clock clock;
     float timer = 0, delay = 0.3;
     while (window.isOpen()) {
@@ -73,13 +96,14 @@ int main() {
             timer = 0;
         }
         delay = 0.3;
-        t.check_lines();
+        score += t.check_lines();
 
         /////////draw//////////
         window.clear(sf::Color::White);
         window.draw(background);
         window.draw(t);
         window.draw(frame);
+        // window.draw(text);
 
         window.display();
     }

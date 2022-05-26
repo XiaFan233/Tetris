@@ -90,16 +90,16 @@ private:
                     continue;
                 }
                 s.setTextureRect(sf::IntRect(matrix[i][j] * 18, 0, 18, 18));
-                s.setPosition(j * 36.0f, i * 36.0f);
-                s.move(56.0f, 62.0f);  // offset
+                s.setPosition(j * 18 * factors.x, i * 18 * factors.y);
+                s.move(28 * factors.x, 31 * factors.y);  // offset
                 target.draw(s, states);
             }
         }
 
         for (int i = 0; i < 4; i++) {
             s.setTextureRect(sf::IntRect(now.colour * 18, 0, 18, 18));
-            s.setPosition(now.pos[i].x * 36.0f, now.pos[i].y * 36.0f);
-            s.move(56.0f, 62.0f);  // offset
+            s.setPosition(now.pos[i].x * 18 * factors.x, now.pos[i].y * 18 * factors.y);
+            s.move(28 * factors.x, 31 * factors.y);  // offset
             target.draw(s, states);
         }
     }
@@ -173,7 +173,8 @@ public:
         }
     }
 
-    void check_lines() {
+    int check_lines() {
+        int res = 0;
         for (int i = height - 1, k = height - 1; i >= 0; i--) {
             int count = 0;
             for (int j = 0; j < width; j++) {
@@ -184,8 +185,11 @@ public:
             }
             if (count < width) {
                 k--;
+            } else {
+                res++;
             }
         }
+        return res;
     }
 
     void setScale(const sf::Vector2f &_factors) {

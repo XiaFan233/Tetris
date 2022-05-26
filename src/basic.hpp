@@ -13,6 +13,6 @@ struct Point {
 int rand_num(int min, int max) {
     std::random_device seed;
     std::ranlux48 engine(seed());
-    std::uniform_int_distribution<> distrib(min, max);
+    std::uniform_int_distribution<int> distrib(min, max);
     return distrib(engine);
 }
