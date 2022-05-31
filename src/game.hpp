@@ -39,28 +39,21 @@ namespace Colour {
 constexpr int max = 7;
 }
 
+struct Tetromino {
+    std::vector<Point> pos;
+    int shape;
+    int colour;
+    Tetromino() : pos(4), shape(0), colour(0) {}
+};
+
 class Tetris : public sf::Drawable, public sf::Transformable {
 private:
-    struct Tetromino {
-        std::vector<Point> pos;
-        int shape;
-        int colour;
-        Tetromino() : pos(4), shape(0), colour(0) {}
-        void rand() {
-            shape = rand_num(0, Shape::max - 1);
-            colour = rand_num(0, Colour::max - 1);
-            for (int i = 0; i < 4; i++) {
-                pos[i] = Shape::get(shape, i);
-            }
-        }
-    };
-
     int height, width;
     std::vector<std::vector<int>> matrix;
 
-    Tetromino now, backup;
-    sf::Texture Tetromino_t;
-    sf::Vector2f factors;
+    Tetromino next, now, backup;
+    int nextShape, nextColour;
+    sf::Texture TetrominoTexture;
 
     bool check(Tetromino &t) {
         for (int i = 0; i < 4; i++) {
@@ -76,51 +69,68 @@ private:
         return true;
     }
 
-    void init_Tetromino() {
-        now.rand();
+    void initTetromino(Tetromino &tetromino) {
+        static Randomer r(0, Shape::max * Colour::max - 1);
+        tetromino.shape = r() % Shape::max;
+        tetromino.colour = r() % Colour::max;
+        for (int i = 0; i < 4; i++) {
+            tetromino.pos[i] = Shape::get(now.shape, i);
+        }
+    }
+
+    void nextTetromino() {
+        now = next;
         backup = now;
+        initTetromino(next);
     }
 
     virtual void draw(sf::RenderTarget &target, sf::RenderStates states) const {
-        sf::Sprite s(Tetromino_t);
-        s.setScale(factors);
+        sf::Sprite TetrominoSprite(TetrominoTexture);
         for (int i = 0; i < height; i++) {
             for (int j = 0; j < width; j++) {
                 if (matrix[i][j] == -1) {
                     continue;
                 }
-                s.setTextureRect(sf::IntRect(matrix[i][j] * 18, 0, 18, 18));
-                s.setPosition(j * 18 * factors.x, i * 18 * factors.y);
-                s.move(28 * factors.x, 31 * factors.y);  // offset
-                target.draw(s, states);
+                TetrominoSprite.setTextureRect(sf::IntRect(matrix[i][j] * 18, 0, 18, 18));
+                TetrominoSprite.setPosition(j * 18, i * 18);
+                TetrominoSprite.move(28, 31);
+                target.draw(TetrominoSprite, states);
             }
         }
 
         for (int i = 0; i < 4; i++) {
-            s.setTextureRect(sf::IntRect(now.colour * 18, 0, 18, 18));
-            s.setPosition(now.pos[i].x * 18 * factors.x, now.pos[i].y * 18 * factors.y);
-            s.move(28 * factors.x, 31 * factors.y);  // offset
-            target.draw(s, states);
+            TetrominoSprite.setTextureRect(sf::IntRect(now.colour * 18, 0, 18, 18));
+            TetrominoSprite.setPosition(now.pos[i].x * 18, now.pos[i].y * 18);
+            TetrominoSprite.move(28, 31);
+            target.draw(TetrominoSprite, states);
+        }
+
+        for (int i = 0; i < 4; i++) {
+            TetrominoSprite.setTextureRect(sf::IntRect(next.colour * 18, 0, 18, 18));
+            TetrominoSprite.setPosition(next.pos[i].x * 18, next.pos[i].y * 18);
+            TetrominoSprite.move(250, 80);
+            target.draw(TetrominoSprite, states);
         }
     }
 
 public:
-    Tetris(int _height, int _width, sf::Texture _Tetromino_t)
-        : height(_height),
-          width(_width),
-          matrix(_height, std::vector<int>(_width, -1)),
-          Tetromino_t(_Tetromino_t) {
-        init_Tetromino();
+    Tetris(int _height, int _width, sf::Texture _TetrominoTexture) : 
+      height(_height),
+      width(_width),
+      matrix(_height, std::vector<int>(_width, -1)),
+      TetrominoTexture(_TetrominoTexture) {
+        initTetromino(next);
+        nextTetromino();
     }
 
     void resize(int _height, int _width) {
         height = _height;
         width = _width;
         matrix.resize(_height, std::vector<int>(_width, -1));
-        init_Tetromino();
+        nextTetromino();
     }
 
-    void move_x(int dx) {
+    void moveX(int dx) {
         for (int i = 0; i < 4; i++) {
             now.pos[i].x += dx;
         }
@@ -135,7 +145,7 @@ public:
         }
     }
 
-    void move_y() {
+    void moveY() {
         // std::cerr << now.shape << "\n";
         for (int i = 0; i < 4; i++) {
             now.pos[i].y++;
@@ -150,7 +160,7 @@ public:
                 int y = backup.pos[i].y;
                 matrix[y][x] = backup.colour;
             }
-            init_Tetromino();
+            nextTetromino();
         }
     }
 
@@ -173,7 +183,7 @@ public:
         }
     }
 
-    int check_lines() {
+    int checkLines() {
         int res = 0;
         for (int i = height - 1, k = height - 1; i >= 0; i--) {
             int count = 0;
@@ -190,10 +200,6 @@ public:
             }
         }
         return res;
-    }
-
-    void setScale(const sf::Vector2f &_factors) {
-        factors = _factors;
     }
 };
 

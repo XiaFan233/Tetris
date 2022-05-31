@@ -10,9 +10,20 @@ struct Point {
     Point(int _x, int _y) : x(_x), y(_y) {}
 };
 
-int rand_num(int min, int max) {
-    std::random_device seed;
-    std::ranlux48 engine(seed());
-    std::uniform_int_distribution<int> distrib(min, max);
-    return distrib(engine);
-}
+template <typename T> class Randomer {
+private:
+    unsigned int seed;
+    std::mt19937 engine;
+    std::uniform_int_distribution<T> distribution;
+
+public:
+    Randomer(T min, T max) : 
+      seed(std::random_device()()),
+      engine(seed), 
+      distribution(min, max) {}
+
+    T operator()() {
+        std::cerr << "[Randomer]" << seed << "\n";
+        return distribution(engine);
+    }
+};

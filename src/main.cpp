@@ -1,5 +1,4 @@
 #include <SFML/Graphics.hpp>
-#include <SFML/Graphics/Font.hpp>
 #include <iostream>
 #include <string>
 #include <vector>
@@ -10,50 +9,62 @@
 using namespace std;
 
 int main() {
-    sf::RenderWindow window(sf::VideoMode(600, 900), "Tetris");
+    sf::RenderWindow window(sf::VideoMode(320, 480), "Tetris");
+    window.setSize(sf::Vector2u(640, 960));
 
-    sf::Texture t1, t2, t3;
-    t1.loadFromFile("images/tiles.png");
-    t2.loadFromFile("images/background.png");
-    t3.loadFromFile("images/frame.png");
-    sf::Sprite background(t2), frame(t3);
+    const string tilesPath      = R"(.\images\tiles.png)";
+    const string backgroundPath = R"(.\images\background.png)";
+    const string framePath      = R"(.\images\frame.png)";
+    const string fontPath       = R"(C:\Windows\Fonts\cambria.ttc)";
 
-    sf::Vector2f scale(2, 2);
-    background.setScale(scale);
-    frame.setScale(scale);
-
-    int height = 20;
-    int width = 10;
-    Game::Tetris t(height, width, t1);
-    t.setScale(scale);
-
-    int score = 0;
-
-    /*
-    string font_path = R"(C:\Windows\Fonts\Microsoft YaHei UI)";
+    sf::Texture tilesTexture, backgroundTexture, frameTexture;
+    if (!tilesTexture.loadFromFile(tilesPath)) {
+        cerr << "[error] tilesTexture.loadFromFile fail!\n";
+    }
+    if (!backgroundTexture.loadFromFile(backgroundPath)) {
+        cerr << "[error] backgroundTexture.loadFromFile fail!\n";
+    }
+    if (!frameTexture.loadFromFile(framePath)) {
+        cerr << "[error] frameTexture.loadFromFile fail!\n";
+    }
     sf::Font font;
-    if (!font.loadFromFile(font_path)) {
-        // error...
+    if (!font.loadFromFile(fontPath)) {
+        cerr << "[error] font.loadFromFile fail!\n";
     }
 
-    sf::Text text;
-    text.setFont(font);
-    text.setString("Hello");
-    text.setCharacterSize(24);
-    text.setFillColor(sf::Color::Red);
-    text.setStyle(sf::Text::Bold | sf::Text::Underlined);
-    text.move(416, 0);
-    */
+    sf::Text titleText("Tetris", font, 24);
+    titleText.setFillColor(sf::Color::Black);
+    titleText.setStyle(sf::Text::Bold | sf::Text::Italic);
+    titleText.move(250, 10);
 
-    int dx = 0;
-    bool rotate = false;
+    sf::Text scoreText("Score:", font, 24);
+    scoreText.setFillColor(sf::Color::Black);
+    scoreText.setStyle(sf::Text::Bold);
+    scoreText.move(250, 200);
+
+    string scoreStr = "0";
+    sf::Text score(scoreStr, font, 24);
+    score.setFillColor(sf::Color::Red);
+    score.setStyle(sf::Text::Bold);
+    score.move(250, 250);
+
+    const int height = 20;
+    const int width = 10;
+    Game::Tetris tetris(height, width, tilesTexture);
+    sf::Sprite background(backgroundTexture), frame(frameTexture);
+
     sf::Clock clock;
     float timer = 0, delay = 0.3;
+    int scoreNum = 0;
+    int dx = 0;
+    bool rotate = false;
     while (window.isOpen()) {
+        // Time
         float time = clock.getElapsedTime().asSeconds();
         clock.restart();
         timer += time;
 
+        // Key
         sf::Event e;
         while (window.pollEvent(e)) {
             if (e.type == sf::Event::Closed) window.close();
@@ -78,35 +89,44 @@ int main() {
                 case sf::Keyboard::Q:
                     window.close();
                     break;
-                default:
-                    break;
                 }
             }
         }
 
-        ///////Move//////
-        t.move_x(dx);
+        // Move
+        tetris.moveX(dx);
         dx = 0;
         if (rotate) {
-            t.rotate();
+            tetris.rotate();
             rotate = false;
         }
         if (timer > delay) {
-            t.move_y();
+            tetris.moveY();
             timer = 0;
         }
         delay = 0.3;
-        score += t.check_lines();
+        int add = tetris.checkLines();
+        if(add > 0) {
+            scoreNum += add;
+            scoreStr = to_string(scoreNum);
+            cerr << "[score] " << scoreNum << "\n";
+        }
 
-        /////////draw//////////
+        // Draw
         window.clear(sf::Color::White);
         window.draw(background);
-        window.draw(t);
+        window.draw(tetris);
         window.draw(frame);
-        // window.draw(text);
+        window.draw(titleText);
+        window.draw(scoreText);
+
+        // Draw Score
+        score.setString(scoreStr);
+        window.draw(score);
 
         window.display();
     }
+    cerr << "[Game End]\n";
 
     return 0;
 }
