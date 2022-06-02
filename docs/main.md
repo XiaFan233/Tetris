@@ -1,7 +1,7 @@
-- [README](..\README.md)
+- [README](../README.md)
 # main
-- [basic](.\basic.md)
-- [game](.\game.md)
+- [basic](./basic.md)
+- [game](./game.md)
 
 ## 1. 预处理
 ### 1.1 读入文件，创建基本`sf::Drawable`的class

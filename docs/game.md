@@ -1,4 +1,4 @@
-[main](.\main.md)
+[main](./main.md)
 # game
 - `namespace Shape`
 - `namespace Colour`

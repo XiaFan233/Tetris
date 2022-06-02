@@ -1,4 +1,4 @@
-[main](.\main.md)
+[main](./main.md)
 # basic
 - `Point`坐标
 - `Randomer`随机数生成器
