@@ -23,7 +23,7 @@ public:
       distribution(min, max) {}
 
     T operator()() {
-        std::cerr << "[Randomer]" << seed << "\n";
+        std::cerr << "[Randomer] " << seed << "\n";
         return distribution(engine);
     }
 };

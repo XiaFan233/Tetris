@@ -1,18 +1,18 @@
-[main](./main.md)
-# game
-## 1. `namespace Shape`
+# [main](./main.md)
+## game
+### 1. `namespace Shape`
 Shape 总共有7种: `I` `Z` `S` `T` `L` `J` `O`
 
-## 2. `namespace Colour`
+### 2. `namespace Colour`
 Colour 总共有7种
 
-## 3. `Tetromino` 可控制的四方块组成的结构
+### 3. `Tetromino` 可控制的四方块组成的结构
 - `pos` 四个方块坐标
 - `shape`
 - `colour`
 - 用`void initTetromino()`初始化随机
 
-## 4. `Tetris` 主要游戏框架
+### 4. `Tetris` 主要游戏框架
 - `matrix`地图颜色矩阵
 - `Tetromino`
     - `now` 当前控制
