@@ -35,6 +35,7 @@
 ---
 
 ## [详细介绍](./docs/main.md)
+## [讲解视频链接](https://www.bilibili.com/video/BV1zL4y1N7q9/?vd_source=af1386f284dfc20acb917ea389160b19)
 
 ---
 
