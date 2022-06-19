@@ -1,3 +1,4 @@
+# [README](../README.md)
 # [main](./main.md)
 
 ---
@@ -21,15 +22,18 @@ Colour 总共有7种
 
 ### 4. `Tetris` 主要游戏框架
 
+数据:
+
 - `matrix` 地图颜色矩阵
 
 - `Tetromino`
-    - `now` 当前控制
+    - `now` 当前控制的
     - `backup` 备份, 当控制违法时候回滚
     - `next` 显示在侧边栏, 当 `now` 销毁时候替代，并随机生成新的
 
-- 纯虚函数 `draw`
-纯虚函数在被继承是必须要实现，在这里我用 `TetrominoSprite` 平移显示的方式打印在屏幕上
+函数:
+
+- 纯虚函数 `draw` 。纯虚函数在被继承是必须要实现，在这里我用 `TetrominoSprite` 平移显示的方式打印在屏幕上
 
 - `moveX` 方块左右移动
 - `moveY` 方块向下移动

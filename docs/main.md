@@ -3,8 +3,8 @@
 ---
 
 ## main
-- [basic](./basic.md)
-- [game](./game.md)
+- [include basic](./basic.md)
+- [include game](./game.md)
 
 ---
 
