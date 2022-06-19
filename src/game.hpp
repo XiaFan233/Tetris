@@ -55,6 +55,7 @@ private:
     Tetromino next, now, backup;
     int nextShape, nextColour;
     sf::Texture TetrominoTexture;
+    Randomer<int> RShape, RColour;
 
     bool check(Tetromino &t) {
         for (int i = 0; i < 4; i++) {
@@ -71,11 +72,10 @@ private:
     }
 
     void initTetromino(Tetromino &tetromino) {
-        static Randomer<int> r(0, Shape::max * Colour::max - 1);
-        tetromino.shape = r() % Shape::max;
-        tetromino.colour = r() % Colour::max;
+        tetromino.shape = RShape();
+        tetromino.colour = RColour();
         for (int i = 0; i < 4; i++) {
-            tetromino.pos[i] = Shape::get(now.shape, i);
+            tetromino.pos[i] = Shape::get(tetromino.shape, i);
         }
     }
 
@@ -119,7 +119,10 @@ public:
       height(height_),
       width(width_),
       matrix(height_, std::vector<int>(width_, -1)),
-      TetrominoTexture(_TetrominoTexture) {
+      TetrominoTexture(_TetrominoTexture),
+      RShape(0, Shape::max - 1),
+      RColour(0, Colour::max - 1)
+    {
         initTetromino(next);
         nextTetromino();
     }
