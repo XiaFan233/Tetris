@@ -1,5 +1,6 @@
 # Tetris 俄罗斯方块小游戏
 
+![avatar](./docs/play.png)
 ---
 
 ## 信息
@@ -35,10 +36,12 @@
 ---
 
 ## [详细介绍](./docs/main.md)
-## [讲解视频链接](https://www.bilibili.com/video/BV1zL4y1N7q9/?vd_source=af1386f284dfc20acb917ea389160b19)
+## [讲解视频链接](https://www.bilibili.com/video/BV1zL4y1N7q9)
 
 ---
 
 ## build
 
-修改 CMakeLists 中 vcpkg path
+1. 准备 sfml 库，推荐使用 vcpkg 进行下载
+2. 修改 CMakeLists 中 vcpkg path
+3. cmake 构建，编译

@@ -10,14 +10,14 @@
 
 ### 1. 预处理
 
-#### 1.1 读入文件，创建基本`sf::Drawable`的class
+#### 1.1 读入文件，创建基本 `sf::Drawable` 的class
 
-- `sf::Texture`是图像class
-- `sf::Font`是字体class
-- `sf::Sprite`是`sf::Drawable`的图像class
-- `sf::Text`是`sf::Drawable`的文字class
+- `sf::Texture` 是图像class
+- `sf::Font` 是字体class
+- `sf::Sprite` 是 `sf::Drawable` 的图像class
+- `sf::Text` 是 `sf::Drawable` 的文字class
 
-#### 1.2 创建主要游戏对象`Game::Tetris`
+#### 1.2 创建主要游戏对象 `Game::Tetris`
 
 ---
 
@@ -30,9 +30,9 @@ while (window.pollEvent(e)) {
     // ...
 }
 ```
-- `timer`计时器
-- `rotate`是否旋转
-- `dx`是否左右移动
-- `score`分数
+- `timer` 计时器
+- `rotate` 是否旋转
+- `dx` 是否左右移动
+- `score` 分数
 
-#### 2.2 清空`window`,画上所有class
+#### 2.2 清空 `window` ,画上所有class
