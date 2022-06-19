@@ -3,7 +3,6 @@
 ---
 
 ## main
-- [include basic](./basic.md)
 - [include game](./game.md)
 
 ---

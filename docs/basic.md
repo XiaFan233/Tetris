@@ -1,5 +1,5 @@
 # [README](../README.md)
-# [main](./main.md)
+# [game](./game.md)
 
 ---
 

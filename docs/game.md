@@ -4,6 +4,7 @@
 ---
 
 ## game
+- [include basic](./basic.md)
 
 ### 1. `namespace Shape`
 
