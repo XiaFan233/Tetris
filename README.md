@@ -1,6 +1,8 @@
 # Tetris 俄罗斯方块小游戏
 
-![avatar](./images/play.png)
+# [GitHub Repo](https://github.com/XiaFan233/Tetris)
+
+![](./images/play.png)
 ---
 
 ## 1. 信息
