@@ -4,7 +4,8 @@ cmake_minimum_required(VERSION 3.20)
 set(CMAKE_TOOLCHAIN_FILE "C:/Dev/vcpkg/scripts/buildsystems/vcpkg.cmake"
   CACHE STRING "Vcpkg toolchain file")
 
-set(CMAKE_CXX_STANDARD 20)
+set(CMAKE_CXX_STANDARD 23)
+
 project(Tetris)
 
 file(GLOB SRC_FILES
@@ -25,5 +26,5 @@ endif()
 # copy images
 add_custom_command(TARGET ${CMAKE_PROJECT_NAME} POST_BUILD
   COMMAND ${CMAKE_COMMAND} -E copy_directory 
-  "${PROJECT_SOURCE_DIR}/images/"
-  "$<TARGET_FILE_DIR:${CMAKE_PROJECT_NAME}>/images")
+  "${PROJECT_SOURCE_DIR}/assets/"
+  "$<TARGET_FILE_DIR:${CMAKE_PROJECT_NAME}>/assets")

@@ -1,6 +1,6 @@
 # Tetris 俄罗斯方块小游戏
 
-![avatar](./docs/play.png)
+![avatar](./images/play.png)
 ---
 
 ## 信息
@@ -23,7 +23,7 @@
 ## 介绍
 
 本游戏基于：`SFML`  
-主要包括库：`sfml-system`，`sfml-window`，`sfml-graphics`  
+主要包括库：`sfml-system` , `sfml-window` , `sfml-graphics`  
 素材和游戏构想来自互联网，具体源头不得知，基本框架，函数均是重写的。  
 （原本框架是单文件，没有函数化，我用class，stl重写，并且完善游戏内容）  
 基本游戏内容已经完善：

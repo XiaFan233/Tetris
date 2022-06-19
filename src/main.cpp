@@ -12,10 +12,10 @@ int main() {
     sf::RenderWindow window(sf::VideoMode(320, 480), "Tetris");
     window.setSize(sf::Vector2u(640, 960));
 
-    const string tilesPath      = R"(.\images\tiles.png)";
-    const string backgroundPath = R"(.\images\background.png)";
-    const string framePath      = R"(.\images\frame.png)";
-    const string fontPath       = R"(C:\Windows\Fonts\cambria.ttc)";
+    const string tilesPath      = R"(.\assets\tiles.png)";
+    const string backgroundPath = R"(.\assets\background.png)";
+    const string framePath      = R"(.\assets\frame.png)";
+    const string fontPath       = R"(.\assets\cambria.ttc)";
 
     sf::Texture tilesTexture, backgroundTexture, frameTexture;
     if (!tilesTexture.loadFromFile(tilesPath)) {

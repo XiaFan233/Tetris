@@ -3,11 +3,13 @@
 #include <SFML/Graphics.hpp>
 #include <iostream>
 #include <vector>
+#include <numbers>
+
+constexpr double Pi = std::numbers::pi;
 
 #include "basic.hpp"
 
 namespace Game {
-
 namespace Shape {
 /**
  * @brief hahahaha
@@ -32,7 +34,6 @@ Point get(int shape, int i) {
     int num = pos[shape][i];
     return Point(num % 2, num / 2);
 }
-
 }  // namespace Shape
 
 namespace Colour {
@@ -70,7 +71,7 @@ private:
     }
 
     void initTetromino(Tetromino &tetromino) {
-        static Randomer r(0, Shape::max * Colour::max - 1);
+        static Randomer<int> r(0, Shape::max * Colour::max - 1);
         tetromino.shape = r() % Shape::max;
         tetromino.colour = r() % Colour::max;
         for (int i = 0; i < 4; i++) {
@@ -114,19 +115,19 @@ private:
     }
 
 public:
-    Tetris(int _height, int _width, sf::Texture _TetrominoTexture) : 
-      height(_height),
-      width(_width),
-      matrix(_height, std::vector<int>(_width, -1)),
+    Tetris(int height_, int width_, sf::Texture _TetrominoTexture) : 
+      height(height_),
+      width(width_),
+      matrix(height_, std::vector<int>(width_, -1)),
       TetrominoTexture(_TetrominoTexture) {
         initTetromino(next);
         nextTetromino();
     }
 
-    void resize(int _height, int _width) {
-        height = _height;
-        width = _width;
-        matrix.resize(_height, std::vector<int>(_width, -1));
+    void resize(int height_, int width_) {
+        height = height_;
+        width = width_;
+        matrix.resize(height_, std::vector<int>(width_, -1));
         nextTetromino();
     }
 
@@ -202,5 +203,4 @@ public:
         return res;
     }
 };
-
 }  // namespace Game

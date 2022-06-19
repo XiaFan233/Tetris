@@ -4,10 +4,9 @@
 #include <random>
 
 struct Point {
-    int x;
-    int y;
+    int x, y;
     Point() : x(0), y(0){};
-    Point(int _x, int _y) : x(_x), y(_y) {}
+    Point(int x_, int y_) : x(x_), y(y_) {}
 };
 
 template <typename T> class Randomer {
